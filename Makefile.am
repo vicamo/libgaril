@@ -3,7 +3,9 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 DISTCHECK_CONFIGURE_FLAGS = \
   --disable-maintainer-mode
 
-GITIGNOREFILES =
+GITIGNOREFILES = \
+  $(DIST_ARCHIVES)
+
 EXTRA_DIST = \
   autogen.sh \
   INSTALL \
