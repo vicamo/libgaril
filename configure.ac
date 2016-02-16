@@ -18,7 +18,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 
-AM_INIT_AUTOMAKE([dist-xz foreign subdir-objects -Wall -Werror])
+# Depends on automake 1.14 or newer so that we don't need AM_PROG_CC_C_O
+AM_INIT_AUTOMAKE([1.14 dist-xz foreign subdir-objects -Wall -Werror])
 AM_MAINTAINER_MODE([enable])
 AM_SILENT_RULES([yes])
 
