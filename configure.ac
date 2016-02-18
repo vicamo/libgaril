@@ -25,6 +25,11 @@ AM_SILENT_RULES([yes])
 
 AC_PROG_CC
 
+# Define _GNU_SOURCE etc. where appropriate, e.g. for strptime() on glibc
+AC_USE_SYSTEM_EXTENSIONS
+# Make sure we use 64-bit versions of various file stuff.
+AC_SYS_LARGEFILE
+
 AC_OUTPUT([
   Makefile
 ])
