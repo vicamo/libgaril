@@ -11,6 +11,8 @@ gcc --version
 
 ./autogen.sh
 make V=1
+make V=1 DESTDIR=$(pwd)/x install && rm -rf $(pwd)/x
+make V=1 install
 make V=1 distcheck
 make V=1 clean
 
