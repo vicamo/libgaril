@@ -1,0 +1,15 @@
+sudo: required
+
+language: c
+
+services:
+  - docker
+
+env:
+  - CI_DOCKER_IMAGE=buildpack-deps:sid
+
+before_install:
+  - docker pull $CI_DOCKER_IMAGE
+
+script:
+  - docker run -t --rm -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR -w $TRAVIS_BUILD_DIR $CI_DOCKER_IMAGE ./travis.sh
