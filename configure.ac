@@ -23,6 +23,21 @@ AM_INIT_AUTOMAKE([1.14 dist-xz foreign subdir-objects no-define -Wall -Werror])
 AM_MAINTAINER_MODE([enable])
 AM_SILENT_RULES([yes])
 
+GARIL_MAJOR_VERSION=libgaril_major_version
+GARIL_MINOR_VERSION=libgaril_minor_version
+GARIL_MICRO_VERSION=libgaril_micro_version
+GARIL_INTERFACE_AGE=libgaril_interface_age
+GARIL_BINARY_AGE=libgaril_binary_age
+GARIL_VERSION=libgaril_version
+GARIL_API_VERSION=libgaril_api_version
+AC_SUBST(GARIL_MAJOR_VERSION)
+AC_SUBST(GARIL_MINOR_VERSION)
+AC_SUBST(GARIL_MICRO_VERSION)
+AC_SUBST(GARIL_INTERFACE_AGE)
+AC_SUBST(GARIL_BINARY_AGE)
+AC_SUBST(GARIL_VERSION)
+AC_SUBST(GARIL_API_VERSION)
+
 AC_PROG_CC
 
 # Define _GNU_SOURCE etc. where appropriate, e.g. for strptime() on glibc
@@ -31,5 +46,6 @@ AC_USE_SYSTEM_EXTENSIONS
 AC_SYS_LARGEFILE
 
 AC_OUTPUT([
+  garil/version.h
   Makefile
 ])

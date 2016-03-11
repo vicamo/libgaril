@@ -19,6 +19,19 @@ MAINTAINERCLEANFILES = \
   $(srcdir)/INSTALL \
   $(srcdir)/README
 
+AM_CPPFLAGS = \
+  -DG_LOG_DOMAIN=\"garil\" \
+  -I$(top_builddir) \
+  -I$(top_srcdir)
+
+AM_CFLAGS = \
+  -Wall -Werror
+
+garilincdir = $(includedir)/garil-$(GARIL_API_VERSION)
+garilinc_HEADERS = \
+  garil/garil.h \
+  garil/version.h
+
 distclean-local:
 	if test "$(srcdir)" = "."; then :; else \
 	  rm -f ChangeLog; \

@@ -1,0 +1,31 @@
+/* libgaril - Android RIL client library
+ * Copyright (C) 2016 You-Sheng Yang
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#pragma once
+
+#define __GARIL_GARIL_H_INSIDE__
+#if !defined (__GARIL_GARIL_H_INSIDE__) && !defined (LIBGARIL_COMPILATION)
+#error "Only <garil/garil.h> can be included directly."
+#endif
+
+#define GARIL_MAJOR_VERSION @GARIL_MAJOR_VERSION@
+#define GARIL_MINOR_VERSION @GARIL_MINOR_VERSION@
+#define GARIL_MICRO_VERSION @GARIL_MICRO_VERSION@
+#define GARIL_INTERFACE_AGE @GARIL_INTERFACE_AGE@
+#define GARIL_BINARY_AGE    @GARIL_BINARY_AGE@
+#define GARIL_VERSION       "@GARIL_VERSION@"
+#define GARIL_API_VERSION   "@GARIL_API_VERSION@"
