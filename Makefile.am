@@ -11,6 +11,8 @@ EXTRA_DIST = \
   INSTALL \
   README
 
+DISTCLEANFILES =
+
 MAINTAINERCLEANFILES = \
   $(DIST_ARCHIVES) \
   $(GITIGNORE_MAINTAINERCLEANFILES_TOPLEVEL) \
@@ -55,6 +57,14 @@ garil_libgaril_la_LDFLAGS = \
   -version-info $(LT_VERSION_INFO)
 
 garilinc_HEADERS += $(garil_public_headers)
+
+###############################
+## pkg-config DATA
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = garil.pc
+
+DISTCLEANFILES += $(pkgconfig_DATA)
 
 distclean-local:
 	if test "$(srcdir)" = "."; then :; else \

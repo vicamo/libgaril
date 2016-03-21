@@ -61,8 +61,11 @@ LT_INIT([disable-static])
 # Create libtool early, because it's used in configure
 LT_OUTPUT
 
+PKG_PROG_PKG_CONFIG
+
 AC_CONFIG_FILES([
   garil/garilversion.h
+  garil.pc
   Makefile
 ])
 
