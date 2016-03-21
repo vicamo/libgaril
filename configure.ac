@@ -38,12 +38,28 @@ AC_SUBST(GARIL_BINARY_AGE)
 AC_SUBST(GARIL_VERSION)
 AC_SUBST(GARIL_API_VERSION)
 
+m4_define([lt_current], [m4_eval(100 * libgaril_minor_version + libgaril_micro_version - libgaril_interface_age)])
+m4_define([lt_revision], [libgaril_interface_age])
+m4_define([lt_age], [m4_eval(libgaril_binary_age - libgaril_interface_age)])
+LT_VERSION_INFO="lt_current:lt_revision:lt_age"
+LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
+AC_SUBST(LT_VERSION_INFO)
+AC_SUBST(LT_CURRENT_MINUS_AGE)
+
 AC_PROG_CC
 
 # Define _GNU_SOURCE etc. where appropriate, e.g. for strptime() on glibc
 AC_USE_SYSTEM_EXTENSIONS
 # Make sure we use 64-bit versions of various file stuff.
 AC_SYS_LARGEFILE
+
+AM_PROG_AR
+
+dnl Initialize libtool
+LT_PREREQ([2.2.6])
+LT_INIT([disable-static])
+# Create libtool early, because it's used in configure
+LT_OUTPUT
 
 AC_OUTPUT([
   garil/version.h

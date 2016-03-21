@@ -29,6 +29,8 @@ AM_CPPFLAGS = \
 AM_CFLAGS = \
   -Wall -Werror
 
+lib_LTLIBRARIES =
+
 garilincdir = $(includedir)/garil-$(GARIL_API_VERSION)
 garilinc_HEADERS = \
   garil/garil.h \
