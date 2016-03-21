@@ -62,7 +62,7 @@ LT_INIT([disable-static])
 LT_OUTPUT
 
 AC_CONFIG_FILES([
-  garil/version.h
+  garil/garilversion.h
   Makefile
 ])
 

@@ -34,7 +34,7 @@ lib_LTLIBRARIES =
 garilincdir = $(includedir)/garil-$(GARIL_API_VERSION)
 garilinc_HEADERS = \
   garil/garil.h \
-  garil/version.h
+  garil/garilversion.h
 
 ###############################
 ## libgaril
