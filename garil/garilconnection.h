@@ -20,3 +20,16 @@
 #if !defined (__GARIL_GARIL_H_INSIDE__) && !defined (LIBGARIL_COMPILATION)
 #error "Only <garil/garil.h> can be included directly."
 #endif
+
+#include <glib.h>
+#include <glib-object.h>
+#include <gio/gio.h>
+
+G_BEGIN_DECLS
+
+#define GARIL_TYPE_CONNECTION  (garil_connection_get_type ())
+
+G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
+                      GObject)
+
+G_END_DECLS

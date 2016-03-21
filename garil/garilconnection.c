@@ -20,3 +20,20 @@
 #endif
 
 #include "garil/garilconnection.h"
+
+struct  _GarilConnection {
+  gint dummy;
+};
+
+G_DEFINE_TYPE (GarilConnection, garil_connection, G_TYPE_OBJECT)
+
+static void
+garil_connection_class_init (GarilConnectionClass *klass G_GNUC_UNUSED)
+{
+}
+
+static void
+garil_connection_init (GarilConnection *connection G_GNUC_UNUSED)
+{
+  /* do nothing */
+}
