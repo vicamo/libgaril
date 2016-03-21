@@ -61,7 +61,9 @@ LT_INIT([disable-static])
 # Create libtool early, because it's used in configure
 LT_OUTPUT
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
   garil/version.h
   Makefile
 ])
+
+AC_OUTPUT
