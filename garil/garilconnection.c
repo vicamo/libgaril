@@ -15,11 +15,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#if defined (HAVE_CONFIG_H)
+#include "config.h"
+#endif
 
-#define __GARIL_GARIL_H_INSIDE__
-
-#include <garil/garilconnection.h>
-#include <garil/verion.h>
-
-#undef __GARIL_GARIL_H_INSIDE__
+#include "garil/garilconnection.h"

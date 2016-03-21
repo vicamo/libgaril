@@ -17,9 +17,6 @@
 
 #pragma once
 
-#define __GARIL_GARIL_H_INSIDE__
-
-#include <garil/garilconnection.h>
-#include <garil/verion.h>
-
-#undef __GARIL_GARIL_H_INSIDE__
+#if !defined (__GARIL_GARIL_H_INSIDE__) && !defined (LIBGARIL_COMPILATION)
+#error "Only <garil/garil.h> can be included directly."
+#endif

@@ -36,6 +36,21 @@ garilinc_HEADERS = \
   garil/garil.h \
   garil/version.h
 
+###############################
+## libgaril
+
+lib_LTLIBRARIES += garil/libgaril.la
+
+garil_libgaril_la_SOURCES = \
+  garil/garilconnection.c \
+  garil/garilconnection.h
+
+garil_libgaril_la_CFLAGS = \
+  -DLIBGARIL_COMPILATION
+
+garil_libgaril_la_LDFLAGS = \
+  -version-info $(LT_VERSION_INFO)
+
 distclean-local:
 	if test "$(srcdir)" = "."; then :; else \
 	  rm -f ChangeLog; \
