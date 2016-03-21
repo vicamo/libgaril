@@ -63,6 +63,14 @@ LT_OUTPUT
 
 PKG_PROG_PKG_CONFIG
 
+m4_define([gio_required_version], [2.22])
+
+PKG_CHECK_MODULES(BASE_DEPENDENCIES,
+                  [gio-2.0 >= gio_required_version])
+
+GARIL_PACKAGES="gio-2.0 >= gio_required_version"
+AC_SUBST(GARIL_PACKAGES)
+
 AC_CONFIG_FILES([
   garil/garilversion.h
   garil.pc

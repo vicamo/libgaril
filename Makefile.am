@@ -51,7 +51,11 @@ garil_libgaril_la_SOURCES = \
   garil/garilconnection.c
 
 garil_libgaril_la_CFLAGS = \
+  $(BASE_DEPENDENCIES_CFLAGS) \
   -DLIBGARIL_COMPILATION
+
+garil_libgaril_la_LIBADD = \
+  $(BASE_DEPENDENCIES_LIBS)
 
 garil_libgaril_la_LDFLAGS = \
   -version-info $(LT_VERSION_INFO)
