@@ -41,15 +41,20 @@ garilinc_HEADERS = \
 
 lib_LTLIBRARIES += garil/libgaril.la
 
-garil_libgaril_la_SOURCES = \
-  garil/garilconnection.c \
+garil_public_headers = \
   garil/garilconnection.h
+
+garil_libgaril_la_SOURCES = \
+  $(garil_public_headers) \
+  garil/garilconnection.c
 
 garil_libgaril_la_CFLAGS = \
   -DLIBGARIL_COMPILATION
 
 garil_libgaril_la_LDFLAGS = \
   -version-info $(LT_VERSION_INFO)
+
+garilinc_HEADERS += $(garil_public_headers)
 
 distclean-local:
 	if test "$(srcdir)" = "."; then :; else \
