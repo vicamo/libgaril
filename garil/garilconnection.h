@@ -32,4 +32,35 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
                       GObject)
 
+#define GARIL_CONNECTION_PROP_STREAM "stream"
+#define GARIL_CONNECTION_PROP_ADDRESS "address"
+
+void garil_connection_new (GIOStream           *stream,
+                           GCancellable        *cancellable,
+                           GAsyncReadyCallback  callback,
+                           gpointer             user_data);
+
+GarilConnection* garil_connection_new_finish (GAsyncResult  *res,
+                                              GError       **error);
+
+GarilConnection* garil_connection_new_sync (GIOStream     *stream,
+                                            GCancellable  *cancellable,
+                                            GError       **error);
+
+void garil_connection_new_for_address (GSocketAddress      *address,
+                                       GCancellable        *cancellable,
+                                       GAsyncReadyCallback  callback,
+                                       gpointer             user_data);
+
+GarilConnection* garil_connection_new_for_address_finish (GAsyncResult  *res,
+                                                          GError       **error);
+
+GarilConnection* garil_connection_new_for_address_sync (GSocketAddress  *address,
+                                                        GCancellable    *cancellable,
+                                                        GError         **error);
+
+GIOStream* garil_connection_get_stream (GarilConnection *connection);
+
+GSocketAddress* garil_connection_get_address (GarilConnection *connection);
+
 G_END_DECLS
