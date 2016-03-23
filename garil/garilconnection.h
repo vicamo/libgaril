@@ -57,6 +57,13 @@ G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
 #define GARIL_CONNECTION_PROP_FLAGS "flags"
 
 /**
+ * GARIL_CONNECTION_SIG_MESSAGE:
+ *
+ * Signal name for #GarilConnection::message.
+ */
+#define GARIL_CONNECTION_SIG_MESSAGE "message"
+
+/**
  * GarilConnectionFlags:
  * @GARIL_CONNECTION_FLAGS_NONE: No flag set.
  * @GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING: Delay message processing
