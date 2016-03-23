@@ -110,4 +110,6 @@ GSocketAddress* garil_connection_get_address (GarilConnection *connection);
 
 GarilConnectionFlags garil_connection_get_flags (GarilConnection *connection);
 
+void garil_connection_start_message_processing (GarilConnection *connection);
+
 G_END_DECLS

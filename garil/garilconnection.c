@@ -51,6 +51,9 @@ struct _GarilConnection {
   GCancellable *cancellable;
   gssize packet_size;
   GBufferedInputStream *bistream;
+  GQueue *input_queue;
+  guint input_idle_id;
+  gboolean frozen;
 };
 
 static void initable_iface_init (GInitableIface *initable_iface);
@@ -87,6 +90,14 @@ enum
 };
 
 static guint signals[N_SIGNALS] = { 0 };
+
+static gboolean
+check_initialized (GarilConnection *connection)
+{
+  gint flags = g_atomic_int_get (&connection->atom_flags);
+
+  return (flags & FLAG_INITIALIZED) && (connection->init_error == NULL);
+}
 
 static void
 set_property (GObject      *object,
@@ -258,16 +269,31 @@ garil_connection_init (GarilConnection *connection)
   g_mutex_init (&connection->init_lock);
 }
 
-static void
-dispatch_rx_bytes (GarilConnection *connection,
-                   GByteArray      *byte_array)
+static gboolean
+dispatch_input (gpointer user_data)
 {
-  GarilParcel *parcel = garil_parcel_new (byte_array);
-  g_byte_array_unref (byte_array);
+  GarilConnection *connection = GARIL_CONNECTION (user_data);
+  GarilParcel *parcel;
 
-  g_signal_emit (connection, SIGNAL_MESSAGE, 0, parcel);
+  while ((parcel = g_queue_pop_head (connection->input_queue)) != NULL) {
+    g_signal_emit (connection, SIGNAL_MESSAGE, 0, parcel);
+    garil_parcel_unref (parcel);
+  }
 
-  garil_parcel_unref (parcel);
+  connection->input_idle_id = 0;
+  return G_SOURCE_REMOVE;
+}
+
+static void
+maybe_schedule_dispatch_input (GarilConnection *connection)
+{
+  if (connection->frozen || connection->input_idle_id)
+    return;
+
+  connection->input_idle_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                               dispatch_input,
+                                               g_object_ref (connection),
+                                               g_object_unref);
 }
 
 static void
@@ -317,7 +343,13 @@ dispatch_rx_available (GarilConnection  *connection,
     }
 
     connection->packet_size = 0;
-    dispatch_rx_bytes (connection, g_bytes_unref_to_array (bytes));
+
+    GByteArray *byte_array = g_bytes_unref_to_array (bytes);
+    GarilParcel *parcel = garil_parcel_new (byte_array);
+    g_byte_array_unref (byte_array);
+
+    g_queue_push_tail (connection->input_queue, parcel);
+    maybe_schedule_dispatch_input (connection);
   }
 }
 
@@ -426,6 +458,11 @@ initable_init (GInitable     *initable,
       G_BUFFERED_INPUT_STREAM (g_buffered_input_stream_new (istream));
   else
     connection->bistream = G_BUFFERED_INPUT_STREAM (g_object_ref (istream));
+
+  connection->input_queue = g_queue_new ();
+
+  if (connection->flags & GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING)
+    connection->frozen = TRUE;
 
   connection->cancellable = g_cancellable_new ();
 
@@ -694,4 +731,28 @@ garil_connection_get_flags (GarilConnection *connection)
                         GARIL_CONNECTION_FLAGS_NONE);
 
   return connection->flags;
+}
+
+/**
+ * garil_connection_start_message_processing:
+ * @connection: A #GarilConnection.
+ *
+ * If connection was created with
+ * GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING, this method starts
+ * processing messages. Does nothing on if connection wasn't created with this
+ * flag or if the method has already been called.
+ */
+void
+garil_connection_start_message_processing (GarilConnection *connection)
+{
+  g_return_if_fail (GARIL_IS_CONNECTION (connection));
+
+  if (!check_initialized (connection))
+    return;
+
+  if (!connection->frozen)
+    return;
+
+  connection->frozen = FALSE;
+  maybe_schedule_dispatch_input (connection);
 }
