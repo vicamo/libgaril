@@ -25,7 +25,7 @@ struct  _GarilConnection {
   /*< private >*/
   GObject parent_instance;
 
-  volatile gint flags;
+  volatile gint atom_flags;
 
   GMutex init_lock;
   GError *init_error;
@@ -43,7 +43,7 @@ G_DEFINE_TYPE_WITH_CODE (GarilConnection, garil_connection, G_TYPE_OBJECT,
                                                 async_initable_iface_init)
                         );
 
-/* Flags for GarilConnection::flags */
+/* Flags for GarilConnection::atom_flags */
 enum
 {
   FLAG_INITIALIZED = (1 << 0),
@@ -172,7 +172,7 @@ initable_init (GInitable     *initable,
 
   g_mutex_lock (&connection->init_lock);
 
-  if (!(g_atomic_int_get (&connection->flags) & FLAG_INITIALIZED)) {
+  if (!(g_atomic_int_get (&connection->atom_flags) & FLAG_INITIALIZED)) {
     ret = (connection->init_error == NULL);
     goto out;
   }
@@ -209,7 +209,7 @@ out:
     g_propagate_error (error, g_error_copy (connection->init_error));
   }
 
-  g_atomic_int_or (&connection->flags, FLAG_INITIALIZED);
+  g_atomic_int_or (&connection->atom_flags, FLAG_INITIALIZED);
   g_mutex_unlock (&connection->init_lock);
 
   return ret;
