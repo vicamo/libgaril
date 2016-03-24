@@ -34,38 +34,45 @@ G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
 
 #define GARIL_CONNECTION_PROP_STREAM "stream"
 #define GARIL_CONNECTION_PROP_ADDRESS "address"
+#define GARIL_CONNECTION_PROP_FLAGS "flags"
 
 typedef enum {
   GARIL_CONNECTION_FLAGS_NONE = 0,
   GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING = (1 << 0),
 } GarilConnectionFlags;
 
-void garil_connection_new (GIOStream           *stream,
-                           GCancellable        *cancellable,
-                           GAsyncReadyCallback  callback,
-                           gpointer             user_data);
+void garil_connection_new (GIOStream            *stream,
+                           GarilConnectionFlags  flags,
+                           GCancellable         *cancellable,
+                           GAsyncReadyCallback   callback,
+                           gpointer              user_data);
 
 GarilConnection* garil_connection_new_finish (GAsyncResult  *res,
                                               GError       **error);
 
-GarilConnection* garil_connection_new_sync (GIOStream     *stream,
-                                            GCancellable  *cancellable,
-                                            GError       **error);
+GarilConnection* garil_connection_new_sync (GIOStream             *stream,
+                                            GarilConnectionFlags   flags,
+                                            GCancellable          *cancellable,
+                                            GError               **error);
 
-void garil_connection_new_for_address (GSocketAddress      *address,
-                                       GCancellable        *cancellable,
-                                       GAsyncReadyCallback  callback,
-                                       gpointer             user_data);
+void garil_connection_new_for_address (GSocketAddress       *address,
+                                       GarilConnectionFlags  flags,
+                                       GCancellable         *cancellable,
+                                       GAsyncReadyCallback   callback,
+                                       gpointer              user_data);
 
 GarilConnection* garil_connection_new_for_address_finish (GAsyncResult  *res,
                                                           GError       **error);
 
-GarilConnection* garil_connection_new_for_address_sync (GSocketAddress  *address,
-                                                        GCancellable    *cancellable,
-                                                        GError         **error);
+GarilConnection* garil_connection_new_for_address_sync (GSocketAddress        *address,
+                                                        GarilConnectionFlags   flags,
+                                                        GCancellable          *cancellable,
+                                                        GError               **error);
 
 GIOStream* garil_connection_get_stream (GarilConnection *connection);
 
 GSocketAddress* garil_connection_get_address (GarilConnection *connection);
+
+GarilConnectionFlags garil_connection_get_flags (GarilConnection *connection);
 
 G_END_DECLS

@@ -20,6 +20,7 @@
 #endif
 
 #include "garil/garilconnection.h"
+#include "garil/garilenumtypes.h"
 
 struct  _GarilConnection {
   /*< private >*/
@@ -31,6 +32,7 @@ struct  _GarilConnection {
   GError *init_error;
   GIOStream *stream;
   GSocketAddress *address;
+  GarilConnectionFlags flags;
 };
 
 static void initable_iface_init (GInitableIface *initable_iface);
@@ -54,6 +56,7 @@ enum
   PROP_0,
   PROP_STREAM,
   PROP_ADDRESS,
+  PROP_FLAGS,
   N_PROPERTIES
 };
 
@@ -74,6 +77,9 @@ set_property (GObject      *object,
     case PROP_ADDRESS:
       connection->address = g_value_dup_object (value);
       break;
+    case PROP_FLAGS:
+      connection->flags = g_value_get_flags (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -91,6 +97,9 @@ get_property (GObject    *object,
   switch (prop_id) {
     case PROP_STREAM:
       g_value_set_object (value, garil_connection_get_stream (connection));
+      break;
+    case PROP_FLAGS:
+      g_value_set_flags (value, garil_connection_get_flags (connection));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -149,6 +158,15 @@ garil_connection_class_init (GarilConnectionClass *klass)
                          "Address",
                          "Socket address specifying potential socket endpoints",
                          G_TYPE_SOCKET_ADDRESS,
+                         G_PARAM_CONSTRUCT_ONLY | \
+                           G_PARAM_READWRITE | \
+                           G_PARAM_STATIC_STRINGS);
+
+  props[PROP_FLAGS] =
+    g_param_spec_flags (GARIL_CONNECTION_PROP_FLAGS,
+                        "Flags", "Flags",
+                        GARIL_TYPE_CONNECTION_FLAGS,
+                        GARIL_CONNECTION_FLAGS_NONE,
                          G_PARAM_CONSTRUCT_ONLY | \
                            G_PARAM_READWRITE | \
                            G_PARAM_STATIC_STRINGS);
@@ -228,10 +246,11 @@ async_initable_iface_init (GAsyncInitableIface *async_initable_iface G_GNUC_UNUS
 }
 
 void
-garil_connection_new (GIOStream           *stream,
-                      GCancellable        *cancellable,
-                      GAsyncReadyCallback  callback,
-                      gpointer             user_data)
+garil_connection_new (GIOStream            *stream,
+                      GarilConnectionFlags  flags,
+                      GCancellable         *cancellable,
+                      GAsyncReadyCallback   callback,
+                      gpointer              user_data)
 {
   g_return_if_fail (G_IS_IO_STREAM (stream));
 
@@ -239,6 +258,7 @@ garil_connection_new (GIOStream           *stream,
                               G_PRIORITY_DEFAULT,
                               cancellable, callback, user_data,
                               GARIL_CONNECTION_PROP_STREAM, stream,
+                              GARIL_CONNECTION_PROP_FLAGS, flags,
                               NULL);
 }
 
@@ -266,23 +286,26 @@ garil_connection_new_finish (GAsyncResult  *res,
 }
 
 GarilConnection*
-garil_connection_new_sync (GIOStream     *stream,
-                           GCancellable  *cancellable,
-                           GError       **error)
+garil_connection_new_sync (GIOStream            *stream,
+                           GarilConnectionFlags  flags,
+                           GCancellable          *cancellable,
+                           GError               **error)
 {
   g_return_val_if_fail (G_IS_IO_STREAM (stream), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   return g_initable_new (GARIL_TYPE_CONNECTION, cancellable, error,
                          GARIL_CONNECTION_PROP_STREAM, stream,
+                         GARIL_CONNECTION_PROP_FLAGS, flags,
                          NULL);
 }
 
 void
-garil_connection_new_for_address (GSocketAddress      *address,
-                                  GCancellable        *cancellable,
-                                  GAsyncReadyCallback  callback,
-                                  gpointer             user_data)
+garil_connection_new_for_address (GSocketAddress       *address,
+                                  GarilConnectionFlags  flags,
+                                  GCancellable         *cancellable,
+                                  GAsyncReadyCallback   callback,
+                                  gpointer              user_data)
 {
   g_return_if_fail (G_IS_SOCKET_ADDRESS (address));
 
@@ -290,6 +313,7 @@ garil_connection_new_for_address (GSocketAddress      *address,
                               G_PRIORITY_DEFAULT,
                               cancellable, callback, user_data,
                               GARIL_CONNECTION_PROP_ADDRESS, address,
+                              GARIL_CONNECTION_PROP_FLAGS, flags,
                               NULL);
 }
 
@@ -301,15 +325,17 @@ garil_connection_new_for_address_finish (GAsyncResult  *res,
 }
 
 GarilConnection*
-garil_connection_new_for_address_sync (GSocketAddress  *address,
-                                       GCancellable    *cancellable,
-                                       GError         **error)
+garil_connection_new_for_address_sync (GSocketAddress        *address,
+                                       GarilConnectionFlags   flags,
+                                       GCancellable          *cancellable,
+                                       GError               **error)
 {
   g_return_val_if_fail (G_IS_SOCKET_ADDRESS (address), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   return g_initable_new (GARIL_TYPE_CONNECTION, cancellable, error,
                          GARIL_CONNECTION_PROP_ADDRESS, address,
+                         GARIL_CONNECTION_PROP_FLAGS, flags,
                          NULL);
 }
 
@@ -327,4 +353,13 @@ garil_connection_get_address (GarilConnection *connection)
   g_return_val_if_fail (GARIL_IS_CONNECTION (connection), NULL);
 
   return connection->address;
+}
+
+GarilConnectionFlags
+garil_connection_get_flags (GarilConnection *connection)
+{
+  g_return_val_if_fail (GARIL_IS_CONNECTION (connection),
+                        GARIL_CONNECTION_FLAGS_NONE);
+
+  return connection->flags;
 }
