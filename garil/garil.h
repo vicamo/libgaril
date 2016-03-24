@@ -20,6 +20,7 @@
 #define __GARIL_GARIL_H_INSIDE__
 
 #include <garil/garilconnection.h>
+#include <garil/garilenumtypes.h>
 #include <garil/garilversion.h>
 
 #undef __GARIL_GARIL_H_INSIDE__

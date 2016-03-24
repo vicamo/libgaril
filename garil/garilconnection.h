@@ -35,6 +35,11 @@ G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
 #define GARIL_CONNECTION_PROP_STREAM "stream"
 #define GARIL_CONNECTION_PROP_ADDRESS "address"
 
+typedef enum {
+  GARIL_CONNECTION_FLAGS_NONE = 0,
+  GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING = (1 << 0),
+} GarilConnectionFlags;
+
 void garil_connection_new (GIOStream           *stream,
                            GCancellable        *cancellable,
                            GAsyncReadyCallback  callback,

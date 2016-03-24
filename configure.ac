@@ -71,6 +71,9 @@ PKG_CHECK_MODULES(BASE_DEPENDENCIES,
 GARIL_PACKAGES="gio-2.0 >= gio_required_version"
 AC_SUBST(GARIL_PACKAGES)
 
+GLIB_MKENUMS=`$PKG_CONFIG --variable=glib_mkenums glib-2.0`
+AC_SUBST(GLIB_MKENUMS)
+
 AC_CONFIG_FILES([
   garil/garilversion.h
   garil.pc

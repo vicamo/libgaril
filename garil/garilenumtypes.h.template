@@ -1,0 +1,53 @@
+/*** BEGIN file-header ***/
+/* libgaril - Android RIL client library
+ * Copyright (C) 2016 You-Sheng Yang
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#pragma once
+
+#if !defined (__GARIL_GARIL_H_INSIDE__) && !defined (LIBGARIL_COMPILATION)
+#error "Only <garil/garil.h> can be included directly."
+#endif
+
+#include <glib-object.h>
+
+/*** END file-header ***/
+
+/*** BEGIN file-production ***/
+#include <@filename@>
+
+G_BEGIN_DECLS
+
+/*** END file-production ***/
+
+/*** BEGIN value-header ***/
+GType @enum_name@_get_type (void) G_GNUC_CONST;
+#define @ENUMPREFIX@_TYPE_@ENUMSHORT@ (@enum_name@_get_type ())
+
+/* Define type-specific symbols */
+#define __@ENUMPREFIX@_@ENUMSHORT@_IS_@TYPE@__
+#if defined (__@ENUMPREFIX@_@ENUMSHORT@_IS_ENUM__)
+const gchar *@enum_name@_get_string (@EnumName@ val);
+#elif defined (__@ENUMPREFIX@_@ENUMSHORT@_IS_FLAGS__)
+gchar *@enum_name@_build_string_from_mask (@EnumName@ mask);
+#endif
+/*** END value-header ***/
+
+/*** BEGIN value-tail ***/
+
+G_END_DECLS
+
+/*** END value-tail ***/

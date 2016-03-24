@@ -11,6 +11,7 @@ EXTRA_DIST = \
   INSTALL \
   README
 
+BUILT_SOURCES =
 DISTCLEANFILES =
 
 MAINTAINERCLEANFILES = \
@@ -61,6 +62,28 @@ garil_libgaril_la_LDFLAGS = \
   -version-info $(LT_VERSION_INFO)
 
 garilinc_HEADERS += $(garil_public_headers)
+
+###############################
+## libgaril - enums
+
+garil_libgaril_enum_csources = \
+  garil/garilenumtypes.c \
+  garil/garilenumtypes.h
+
+garil_libgaril_enum_cheaders = \
+  garil/garilconnection.h
+
+$(garil_libgaril_enum_csources): Makefile.am $(garil_libgaril_enum_cheaders) $(garil_libgaril_enum_csources:=.template)
+	$(AM_V_GEN) $(GLIB_MKENUMS) \
+	  --template $@.template \
+	  $(garil_libgaril_enum_cheaders) > $@
+
+BUILT_SOURCES += $(garil_libgaril_enum_csources)
+garil_libgaril_la_SOURCES += $(garil_libgaril_enum_csources)
+garilinc_HEADERS += garil/garilenumtypes.h
+
+EXTRA_DIST += \
+   $(garil_libgaril_enum_csources:=.template)
 
 ###############################
 ## pkg-config DATA
