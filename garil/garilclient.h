@@ -17,11 +17,33 @@
 
 #pragma once
 
-#define __GARIL_GARIL_H_INSIDE__
+#if !defined (__GARIL_GARIL_H_INSIDE__) && !defined (LIBGARIL_COMPILATION)
+#error "Only <garil/garil.h> can be included directly."
+#endif
 
-#include <garil/garilclient.h>
+#include <glib.h>
+#include <glib-object.h>
+#include <gio/gio.h>
+
 #include <garil/garilconnection.h>
-#include <garil/garilenumtypes.h>
-#include <garil/garilversion.h>
 
-#undef __GARIL_GARIL_H_INSIDE__
+G_BEGIN_DECLS
+
+#define GARIL_TYPE_CLIENT  (garil_client_get_type ())
+
+G_DECLARE_DERIVABLE_TYPE (GarilClient, garil_client, GARIL, CLIENT, GObject)
+
+#define GARIL_CLIENT_PROP_CONNECTION "connection"
+
+struct _GarilClientClass {
+  GObjectClass parent_class;
+
+  /*< private >*/
+
+  /* Reserved slots for furture extension. */
+  gpointer padding[12];
+};
+
+GarilClient* garil_client_new (GarilConnection *connection);
+
+G_END_DECLS
