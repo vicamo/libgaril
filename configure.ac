@@ -74,6 +74,8 @@ AC_SUBST(GARIL_PACKAGES)
 GLIB_MKENUMS=`$PKG_CONFIG --variable=glib_mkenums glib-2.0`
 AC_SUBST(GLIB_MKENUMS)
 
+GLIB_TESTS
+
 AC_CONFIG_FILES([
   garil/garilversion.h
   garil.pc

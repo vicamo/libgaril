@@ -124,7 +124,7 @@ installed_testcases = $(test_programs) $(installed_test_programs) \
 
 installed_test_meta_DATA = $(installed_testcases:=.test)
 
-%.test: %$(EXEEXT) Makefile
+$(installed_test_meta_DATA): %.test: %$(EXEEXT) Makefile
 	$(AM_V_GEN) (echo '[Test]' > $@.tmp; \
 	echo 'Type=session' >> $@.tmp; \
 	echo 'Exec=$(installed_testdir)/$(notdir $<) --tap' >> $@.tmp; \
