@@ -89,6 +89,21 @@ EXTRA_DIST += \
    $(garil_libgaril_enum_csources:=.template)
 
 ###############################
+## tests
+
+test_cflags = \
+  $(BASE_DEPENDENCIES_CFLAGS)
+test_ldadd = \
+  $(BASE_DEPENDENCIES_LIBS) \
+  garil/libgaril.la
+
+test_programs = \
+  tests/test-connection
+
+tests_test_connection_CFLAGS = $(test_cflags)
+tests_test_connection_LDADD = $(test_ldadd)
+
+###############################
 ## pkg-config DATA
 
 pkgconfigdir = $(libdir)/pkgconfig
