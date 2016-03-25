@@ -97,6 +97,11 @@ test_ldadd = \
   $(BASE_DEPENDENCIES_LIBS) \
   garil/libgaril.la
 
+if OS_UNIX
+test_cflags += $(GIO_UNIX_CFLAGS)
+test_ldadd += $(GIO_UNIX_LIBS)
+endif
+
 test_programs = \
   tests/test-connection
 

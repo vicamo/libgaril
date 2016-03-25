@@ -46,6 +46,21 @@ LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
 AC_SUBST(LT_VERSION_INFO)
 AC_SUBST(LT_CURRENT_MINUS_AGE)
 
+AC_CANONICAL_HOST
+
+AC_MSG_CHECKING([for Unix])
+case "$host" in
+  *-*-mingw*)
+    garil_os_unix=no
+    ;;
+  *)
+    garil_os_unix=yes
+    ;;
+esac
+AC_MSG_RESULT([$garil_os_unix])
+
+AM_CONDITIONAL(OS_UNIX, [test "$garil_os_unix" = "yes"])
+
 AC_PROG_CC
 
 # Define _GNU_SOURCE etc. where appropriate, e.g. for strptime() on glibc
@@ -70,6 +85,10 @@ PKG_CHECK_MODULES(BASE_DEPENDENCIES,
 
 GARIL_PACKAGES="gio-2.0 >= gio_required_version"
 AC_SUBST(GARIL_PACKAGES)
+
+if test "$garil_os_unix" = "yes"; then
+  PKG_CHECK_MODULES(GIO_UNIX, [gio-unix-2.0 >= gio_required_version])
+fi
 
 GLIB_MKENUMS=`$PKG_CONFIG --variable=glib_mkenums glib-2.0`
 AC_SUBST(GLIB_MKENUMS)
