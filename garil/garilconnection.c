@@ -200,6 +200,11 @@ initable_init (GInitable     *initable,
 
   g_assert (connection->init_error == NULL);
 
+  if ((cancellable != NULL) && g_cancellable_is_cancelled (cancellable)) {
+    g_cancellable_set_error_if_cancelled (cancellable, &connection->init_error);
+    goto out;
+  }
+
   if (connection->address != NULL) {
     g_assert (connection->stream == NULL);
 
