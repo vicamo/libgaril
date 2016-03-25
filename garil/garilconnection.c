@@ -193,7 +193,7 @@ initable_init (GInitable     *initable,
 
   g_mutex_lock (&connection->init_lock);
 
-  if (!(g_atomic_int_get (&connection->atom_flags) & FLAG_INITIALIZED)) {
+  if (g_atomic_int_get (&connection->atom_flags) & FLAG_INITIALIZED) {
     ret = (connection->init_error == NULL);
     goto out;
   }
