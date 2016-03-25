@@ -98,6 +98,9 @@ get_property (GObject    *object,
     case PROP_STREAM:
       g_value_set_object (value, garil_connection_get_stream (connection));
       break;
+    case PROP_ADDRESS:
+      g_value_set_object (value, garil_connection_get_address (connection));
+      break;
     case PROP_FLAGS:
       g_value_set_flags (value, garil_connection_get_flags (connection));
       break;
