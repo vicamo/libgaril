@@ -43,8 +43,7 @@ lib_LTLIBRARIES =
 
 garilincdir = $(includedir)/garil-$(GARIL_API_VERSION)
 garilinc_HEADERS = \
-  garil/garil.h \
-  garil/garilversion.h
+  garil/garil.h
 
 ###############################
 ## libgaril
@@ -53,12 +52,14 @@ lib_LTLIBRARIES += garil/libgaril.la
 
 garil_public_headers = \
   garil/garilclient.h \
-  garil/garilconnection.h
+  garil/garilconnection.h \
+  garil/garilversion.h
 
 garil_libgaril_la_SOURCES = \
   $(garil_public_headers) \
   garil/garilclient.c \
-  garil/garilconnection.c
+  garil/garilconnection.c \
+  garil/garilversion.c
 
 garil_libgaril_la_CFLAGS = \
   $(BASE_DEPENDENCIES_CFLAGS) \
