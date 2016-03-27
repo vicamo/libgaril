@@ -23,14 +23,77 @@
 
 #include <glib.h>
 
+/**
+ * SECTION:garilversion
+ * @title: Version Information
+ * @short_description: Variables and functions to check the Garil version
+ *
+ * Garil provides version Information, primarily useful in configure checks.
+ */
+
 G_BEGIN_DECLS
 
+/**
+ * GARIL_MAJOR_VERSION:
+ *
+ * Like garil_get_major_version(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_MAJOR_VERSION @GARIL_MAJOR_VERSION@
+
+/**
+ * GARIL_MINOR_VERSION:
+ *
+ * Like garil_get_minor_version(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_MINOR_VERSION @GARIL_MINOR_VERSION@
+
+/**
+ * GARIL_MICRO_VERSION:
+ *
+ * Like garil_get_micro_version(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_MICRO_VERSION @GARIL_MICRO_VERSION@
+
+/**
+ * GARIL_INTERFACE_AGE:
+ *
+ * Like garil_get_interface_age(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_INTERFACE_AGE @GARIL_INTERFACE_AGE@
+
+/**
+ * GARIL_BINARY_AGE:
+ *
+ * Like garil_get_binary_age(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_BINARY_AGE    @GARIL_BINARY_AGE@
+
+/**
+ * GARIL_VERSION:
+ *
+ * Like garil_get_version_string(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_VERSION       "@GARIL_VERSION@"
+
+/**
+ * GARIL_API_VERSION:
+ *
+ * Like garil_get_api_version_string(), but from the headers used at application
+ * compile time, rather than from the library linked against at application
+ * runtime.
+ */
 #define GARIL_API_VERSION   "@GARIL_API_VERSION@"
 
 gint         garil_get_major_version      (void);

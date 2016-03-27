@@ -21,6 +21,14 @@
 
 #include "garil/garilclient.h"
 
+/**
+ * SECTION:garilclient
+ * @title: Client Context
+ * @short_description: RIL client API
+ *
+ * GarilClient provides an convenient interface to perform complex tasks.
+ */
+
 typedef struct  _GarilClientPrivate {
   GarilConnection *connection;
 } GarilClientPrivate;
@@ -96,6 +104,11 @@ garil_client_class_init (GarilClientClass *client_class)
 
   /* properties */
 
+  /**
+   * GarilClient:connection:
+   *
+   * The underlying #GarilConnection object for this client.
+   */
   props[PROP_CONNECTION] =
     g_param_spec_object (GARIL_CLIENT_PROP_CONNECTION,
                          "RIL connection", "",
@@ -113,6 +126,14 @@ garil_client_init (GarilClient *client G_GNUC_UNUSED)
   /* do nothing */
 }
 
+/**
+ * garil_client_new:
+ * @connection: A #GarilConnection.
+ *
+ * Create a #GarilClient.
+ *
+ * Returns: (transfer full): A #GarilClient or %NULL if connection is invalid.
+ */
 GarilClient*
 garil_client_new (GarilConnection *connection)
 {

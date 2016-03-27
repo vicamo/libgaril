@@ -27,15 +27,43 @@
 
 G_BEGIN_DECLS
 
+/**
+ * GARIL_TYPE_CONNECTION:
+ *
+ * GType for #GarilConnection.
+ */
 #define GARIL_TYPE_CONNECTION  (garil_connection_get_type ())
 
 G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
                       GObject)
 
+/**
+ * GARIL_CONNECTION_PROP_STREAM:
+ *
+ * Property name for #GarilConnection:stream.
+ */
 #define GARIL_CONNECTION_PROP_STREAM "stream"
+/**
+ * GARIL_CONNECTION_PROP_ADDRESS:
+ *
+ * Property name for #GarilConnection:address.
+ */
 #define GARIL_CONNECTION_PROP_ADDRESS "address"
+/**
+ * GARIL_CONNECTION_PROP_FLAGS:
+ *
+ * Property name for #GarilConnection:flags.
+ */
 #define GARIL_CONNECTION_PROP_FLAGS "flags"
 
+/**
+ * GarilConnectionFlags:
+ * @GARIL_CONNECTION_FLAGS_NONE: No flag set.
+ * @GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING: Delay message processing
+ *   until #garil_connection_start_message_processing() is called.
+ *
+ * Flags used when creating a new #GarilConnection.
+ */
 typedef enum {
   GARIL_CONNECTION_FLAGS_NONE = 0,
   GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING = (1 << 0),

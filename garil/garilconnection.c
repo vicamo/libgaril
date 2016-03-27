@@ -22,7 +22,20 @@
 #include "garil/garilconnection.h"
 #include "garil/garilenumtypes.h"
 
-struct  _GarilConnection {
+/**
+ * SECTION:garilconnection
+ * @title: RIL Connections
+ * @short_description: Raw RIL connection API
+ *
+ * GarilConnection wraps raw RIL traffic with GIO asynchronous APIs.
+ */
+
+/**
+ * GarilConnection:
+ *
+ * An opaque structure.
+ */
+struct _GarilConnection {
   /*< private >*/
   GObject parent_instance;
 
@@ -148,6 +161,11 @@ garil_connection_class_init (GarilConnectionClass *klass)
 
   /* properties */
 
+  /**
+   * GarilConnection:stream:
+   *
+   * The underlying #GIOStream used for I/O.
+   */
   props[PROP_STREAM] =
     g_param_spec_object (GARIL_CONNECTION_PROP_STREAM,
                          "IO Stream", "The underlying streams used for I/O",
@@ -156,6 +174,13 @@ garil_connection_class_init (GarilConnectionClass *klass)
                            G_PARAM_READWRITE | \
                            G_PARAM_STATIC_STRINGS);
 
+  /**
+   * GarilConnection:address:
+   *
+   * A #GSocketAddress specifying endpoint that should be used to establish the
+   * connection. %NULL if the connection was instantiated with a specific stream
+   * instead.
+   */
   props[PROP_ADDRESS] =
     g_param_spec_object (GARIL_CONNECTION_PROP_ADDRESS,
                          "Address",
@@ -165,6 +190,11 @@ garil_connection_class_init (GarilConnectionClass *klass)
                            G_PARAM_READWRITE | \
                            G_PARAM_STATIC_STRINGS);
 
+  /**
+   * GarilConnection:flags:
+   *
+   * Flags from the #GarilConnectionFlags enumeration.
+   */
   props[PROP_FLAGS] =
     g_param_spec_flags (GARIL_CONNECTION_PROP_FLAGS,
                         "Flags", "Flags",
@@ -253,6 +283,23 @@ async_initable_iface_init (GAsyncInitableIface *async_initable_iface G_GNUC_UNUS
   /* use default */
 }
 
+/**
+ * garil_connection_new:
+ * @stream: A #GIOStream.
+ * @flags: Flags describing how to make the connection.
+ * @cancellable: (nullable): A #GCancellable or %NULL.
+ * @callback: A #GAsyncReadyCallback to call when the request is satisfied.
+ * @user_data: (nullable): The data to pass to the @callback.
+ *
+ * Asynchronously sets up a RIL connection for sending requests to and receiving
+ * unsolicited responses from the endpoint represented by stream.
+ *
+ * When the operation is finished, callback will be invoked. You can then call
+ * #garil_connection_new_finish() to get the result of the operation.
+ *
+ * This is a asynchronously fallable constructor. See
+ * #garil_connection_new_sync() for the synchronous version.
+ */
 void
 garil_connection_new (GIOStream            *stream,
                       GarilConnectionFlags  flags,
@@ -270,6 +317,17 @@ garil_connection_new (GIOStream            *stream,
                               NULL);
 }
 
+/**
+ * garil_connection_new_finish:
+ * @res: A #GAsyncResult obtained from the #GAsyncReadyCallback passed to
+ *   #garil_connection_new().
+ * @error: (out) (nullable): Return location for error or %NULL.
+ *
+ * Finishes an operation started with #garil_connection_new().
+ *
+ * Returns: (transfer full): A #GarilConnection or %NULL if error is set. Free
+ *   with #g_object_unref()
+ */
 GarilConnection*
 garil_connection_new_finish (GAsyncResult  *res,
                              GError       **error)
@@ -293,6 +351,22 @@ garil_connection_new_finish (GAsyncResult  *res,
   return NULL;
 }
 
+/**
+ * garil_connection_new_sync:
+ * @stream: A #GIOStream.
+ * @flags: Flags describing how to make the connection.
+ * @cancellable: (nullable): A #GCancellable or %NULL.
+ * @error: (out) (nullable): Return location for error or %NULL.
+ *
+ * Synchronously sets up a RIL connection for sending requests to and receiving
+ * unsolicited responses from the endpoint represented by stream.
+ *
+ * This is a synchronously fallable constructor. See #garil_connection_new()
+ * for the asynchronous version.
+ *
+ * Returns: (transfer full): A #GarilConnection or %NULL if error is set. Free
+ *   with #g_object_unref().
+ */
 GarilConnection*
 garil_connection_new_sync (GIOStream            *stream,
                            GarilConnectionFlags  flags,
@@ -308,6 +382,24 @@ garil_connection_new_sync (GIOStream            *stream,
                          NULL);
 }
 
+/**
+ * garil_connection_new_for_address:
+ * @address: A #GSocketAddress.
+ * @flags: Flags describing how to make the connection.
+ * @cancellable: (nullable): A #GCancellable or %NULL.
+ * @callback: A #GAsyncReadyCallback to call when the request is satisfied.
+ * @user_data: (nullable): The data to pass to the @callback.
+ *
+ * Asynchronously sets up a RIL connection for sending requests to and receiving
+ * unsolicited responses from the endpoint specified by address.
+ *
+ * When the operation is finished, callback will be invoked. You can then call
+ * #garil_connection_new_for_address_finish() to get the result of the
+ * operation.
+ *
+ * This is a asynchronously fallable constructor. See
+ * #garil_connection_new_for_address_sync() for the synchronous version.
+ */
 void
 garil_connection_new_for_address (GSocketAddress       *address,
                                   GarilConnectionFlags  flags,
@@ -325,6 +417,17 @@ garil_connection_new_for_address (GSocketAddress       *address,
                               NULL);
 }
 
+/**
+ * garil_connection_new_for_address_finish:
+ * @res: A #GAsyncResult obtained from the #GAsyncReadyCallback passed to
+ *   #garil_connection_new_for_address().
+ * @error: (out) (nullable): Return location for error or %NULL.
+ *
+ * Finishes an operation started with #garil_connection_new_for_address().
+ *
+ * Returns: (transfer full): A #GarilConnection or %NULL if error is set. Free
+ *   with #g_object_unref().
+ */
 GarilConnection*
 garil_connection_new_for_address_finish (GAsyncResult  *res,
                                          GError       **error)
@@ -332,6 +435,22 @@ garil_connection_new_for_address_finish (GAsyncResult  *res,
   return garil_connection_new_finish (res, error);
 }
 
+/**
+ * garil_connection_new_for_address_sync:
+ * @address: A #GSocketAddress.
+ * @flags: Flags describing how to make the connection.
+ * @cancellable: (nullable): A #GCancellable or %NULL.
+ * @error: (out) (nullable): Return location for error or %NULL.
+ *
+ * Synchronously sets up a RIL connection for sending requests to and receiving
+ * unsolicited responses from the endpoint specified by address.
+ *
+ * This is a synchronously fallable constructor. See
+ * #garil_connection_new_for_address() for the asynchronous version.
+ *
+ * Returns: (transfer full): A #GarilConnection or %NULL if error is set. Free
+ *   with #g_object_unref().
+ */
 GarilConnection*
 garil_connection_new_for_address_sync (GSocketAddress        *address,
                                        GarilConnectionFlags   flags,
@@ -347,6 +466,14 @@ garil_connection_new_for_address_sync (GSocketAddress        *address,
                          NULL);
 }
 
+/**
+ * garil_connection_get_stream:
+ * @connection: A #GarilConnection.
+ *
+ * Get the underlying stream used for I/O.
+ *
+ * Returns: (transfer none): The stream used for I/O.
+ */
 GIOStream*
 garil_connection_get_stream (GarilConnection *connection)
 {
@@ -355,6 +482,15 @@ garil_connection_get_stream (GarilConnection *connection)
   return connection->stream;
 }
 
+/**
+ * garil_connection_get_address:
+ * @connection: A #GarilConnection.
+ *
+ * Get the socket address specifying the endpoint. %NULL if the connection was
+ * not instantiated from #garil_connection_new_for_address().
+ *
+ * Returns: (transfer none): The socket address specifying the endpoint.
+ */
 GSocketAddress*
 garil_connection_get_address (GarilConnection *connection)
 {
@@ -363,6 +499,14 @@ garil_connection_get_address (GarilConnection *connection)
   return connection->address;
 }
 
+/**
+ * garil_connection_get_flags:
+ * @connection: A #GarilConnection.
+ *
+ * Get the flags describing how to create the connection.
+ *
+ * Returns: The #GarilConnectionFlags passed to the constructor.
+ */
 GarilConnectionFlags
 garil_connection_get_flags (GarilConnection *connection)
 {

@@ -21,6 +21,15 @@
 #endif
 
 #include "garil/garilenumtypes.h"
+
+/**
+ * SECTION:garilenumtypes
+ * @title: Enumeration Types
+ * @short_description: Variables and functions for enumeration types
+ *
+ * This section is created from automatically generated files for various
+ * enumerations.
+ */
 /*** END file-header ***/
 
 /*** BEGIN file-production ***/
@@ -37,6 +46,13 @@ static const G@Type@Value @enum_name@_values[] = {
     { 0, NULL, NULL }
 };
 
+/**
+ * @enum_name@_get_type:
+ *
+ * Get GType for @EnumName@.
+ *
+ * Returns: GType for @EnumName@.
+ */
 GType
 @enum_name@_get_type (void)
 {

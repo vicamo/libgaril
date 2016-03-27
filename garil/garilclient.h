@@ -29,12 +29,35 @@
 
 G_BEGIN_DECLS
 
+/**
+ * GARIL_TYPE_CLIENT:
+ *
+ * GType for #GarilClient.
+ */
 #define GARIL_TYPE_CLIENT  (garil_client_get_type ())
 
 G_DECLARE_DERIVABLE_TYPE (GarilClient, garil_client, GARIL, CLIENT, GObject)
 
+/**
+ * GARIL_CLIENT_PROP_CONNECTION:
+ *
+ * Property name for #GarilClient:connection.
+ */
 #define GARIL_CLIENT_PROP_CONNECTION "connection"
 
+/**
+ * GarilClient:
+ * @parent_instance: A #GObject.
+ *
+ * An opaque structure for GarilClient.
+ */
+
+/**
+ * GarilClientClass:
+ * @parent_class: A #GObjectClass.
+ *
+ * A class object type for GarilClient.
+ */
 struct _GarilClientClass {
   GObjectClass parent_class;
 

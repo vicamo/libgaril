@@ -52,9 +52,11 @@ extra_files =
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
 GTKDOC_CFLAGS = \
+  $(BASE_DEPENDENCIES_CFLAGS) \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  $(BASE_DEPENDENCIES_CFLAGS)
+  -DHAVE_CONFIG_H \
+  -DLIBGARIL_COMPILATION
 
 GTKDOC_LIBS = \
   $(BASE_DEPENDENCIES_LIBS) \
