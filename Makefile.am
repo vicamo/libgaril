@@ -1,8 +1,11 @@
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
+SUBDIRS = . docs/reference
+
 include $(top_srcdir)/glib-tap.mk
 
 DISTCHECK_CONFIGURE_FLAGS = \
+  --enable-gtk-doc \
   --disable-maintainer-mode
 
 GITIGNOREFILES = \
@@ -22,7 +25,9 @@ MAINTAINERCLEANFILES += \
   $(GITIGNORE_MAINTAINERCLEANFILES_MAKEFILE_IN) \
   $(srcdir)/ChangeLog \
   $(srcdir)/configure \
+  $(srcdir)/gtk-doc.make \
   $(srcdir)/INSTALL \
+  $(srcdir)/m4/gtk-doc.m4 \
   $(srcdir)/README
 
 AM_CPPFLAGS = \

@@ -19,7 +19,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 
 # Depends on automake 1.14 or newer so that we don't need AM_PROG_CC_C_O
-AM_INIT_AUTOMAKE([1.14 dist-xz foreign subdir-objects no-define -Wall -Werror])
+AM_INIT_AUTOMAKE([1.14 dist-xz foreign subdir-objects no-define -Wall])
 AM_MAINTAINER_MODE([enable])
 AM_SILENT_RULES([yes])
 
@@ -93,9 +93,14 @@ fi
 GLIB_MKENUMS=`$PKG_CONFIG --variable=glib_mkenums glib-2.0`
 AC_SUBST(GLIB_MKENUMS)
 
+# GTK-DOC generation
+GTK_DOC_CHECK([1.20],[--flavour no-tmpl])
+
 GLIB_TESTS
 
 AC_CONFIG_FILES([
+  docs/reference/Makefile
+  docs/reference/version.xml
   garil/garilversion.h
   garil.pc
   Makefile
