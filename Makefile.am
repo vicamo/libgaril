@@ -31,7 +31,8 @@ AM_CPPFLAGS = \
   -I$(top_srcdir)
 
 AM_CFLAGS = \
-  -Wall -Werror
+  -Wall -Werror \
+  -std=c99
 
 lib_LTLIBRARIES =
 
