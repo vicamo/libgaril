@@ -74,4 +74,10 @@ CLEANFILES += \
 EXTRA_DIST += \
   version.xml.in
 
+all-local: check-doc-coverage
+.PHONY: check-doc-coverage
+check-doc-coverage: $(DOC_MODULE)-undocumented.txt
+	$(AM_V_at) O=$$(cat $< | $(GREP) "^0 not documented.$$"); \
+	if test -z "$$O"; then echo "# undocumented:"; cat $<; exit 1; fi
+
 -include $(top_srcdir)/git.mk
