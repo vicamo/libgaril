@@ -74,6 +74,8 @@ CLEANFILES += \
 EXTRA_DIST += \
   version.xml.in
 
+TESTS = $(GTKDOC_CHECK)
+
 all-local: check-doc-coverage
 .PHONY: check-doc-coverage
 check-doc-coverage: $(DOC_MODULE)-undocumented.txt
