@@ -165,6 +165,9 @@ garil_connection_class_init (GarilConnectionClass *klass)
    * GarilConnection:stream:
    *
    * The underlying #GIOStream used for I/O.
+   *
+   * If this is passed on construction and is a GSocketConnection, then the
+   * corresponding GSocket will be put into non-blocking mode.
    */
   props[PROP_STREAM] =
     g_param_spec_object (GARIL_CONNECTION_PROP_STREAM,
@@ -257,6 +260,14 @@ initable_init (GInitable     *initable,
     g_assert_not_reached ();
   }
 
+  if (G_IS_SOCKET_CONNECTION (connection->stream)) {
+    GSocketConnection *socket_connection;
+
+    socket_connection = G_SOCKET_CONNECTION (connection->stream);
+    g_socket_set_blocking (g_socket_connection_get_socket (socket_connection),
+                           FALSE);
+  }
+
   ret = TRUE;
 
 out:
@@ -293,6 +304,9 @@ async_initable_iface_init (GAsyncInitableIface *async_initable_iface G_GNUC_UNUS
  *
  * Asynchronously sets up a RIL connection for sending requests to and receiving
  * unsolicited responses from the endpoint represented by stream.
+ *
+ * If stream is a GSocketConnection, then the corresponding GSocket will be put
+ * into non-blocking mode.
  *
  * When the operation is finished, callback will be invoked. You can then call
  * #garil_connection_new_finish() to get the result of the operation.
@@ -360,6 +374,9 @@ garil_connection_new_finish (GAsyncResult  *res,
  *
  * Synchronously sets up a RIL connection for sending requests to and receiving
  * unsolicited responses from the endpoint represented by stream.
+ *
+ * If stream is a GSocketConnection, then the corresponding GSocket will be put
+ * into non-blocking mode.
  *
  * This is a synchronously fallable constructor. See #garil_connection_new()
  * for the asynchronous version.
