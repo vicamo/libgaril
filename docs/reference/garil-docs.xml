@@ -47,6 +47,7 @@
     <title>Core Object API Reference</title>
     <xi:include href="xml/garilversion.xml"/>
     <xi:include href="xml/garilenumtypes.xml"/>
+    <xi:include href="xml/garilparcel.xml"/>
     <xi:include href="xml/garilconnection.xml"/>
     <xi:include href="xml/garilclient.xml"/>
   </chapter>

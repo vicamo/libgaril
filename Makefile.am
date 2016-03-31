@@ -53,12 +53,14 @@ lib_LTLIBRARIES += garil/libgaril.la
 garil_public_headers = \
   garil/garilclient.h \
   garil/garilconnection.h \
+  garil/garilparcel.h \
   garil/garilversion.h
 
 garil_libgaril_la_SOURCES = \
   $(garil_public_headers) \
   garil/garilclient.c \
   garil/garilconnection.c \
+  garil/garilparcel.c \
   garil/garilversion.c
 
 garil_libgaril_la_CFLAGS = \
