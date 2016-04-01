@@ -112,10 +112,14 @@ test_ldadd += $(GIO_UNIX_LIBS)
 endif
 
 test_programs = \
-  tests/test-connection
+  tests/test-connection \
+  tests/test-parcel
 
 tests_test_connection_CFLAGS = $(test_cflags)
 tests_test_connection_LDADD = $(test_ldadd)
+
+tests_test_parcel_CFLAGS = $(test_cflags)
+tests_test_parcel_LDADD = $(test_ldadd)
 
 ###############################
 ## pkg-config DATA
