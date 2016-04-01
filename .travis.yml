@@ -8,6 +8,10 @@ services:
 env:
   - CI_DOCKER_IMAGE=buildpack-deps:sid
 
+branches:
+  only:
+    - master
+
 before_install:
   - docker pull $CI_DOCKER_IMAGE
 
