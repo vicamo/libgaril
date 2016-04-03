@@ -53,12 +53,14 @@ lib_LTLIBRARIES += garil/libgaril.la
 garil_public_headers = \
   garil/garilclient.h \
   garil/garilconnection.h \
+  garil/garilparcel.h \
   garil/garilversion.h
 
 garil_libgaril_la_SOURCES = \
   $(garil_public_headers) \
   garil/garilclient.c \
   garil/garilconnection.c \
+  garil/garilparcel.c \
   garil/garilversion.c
 
 garil_libgaril_la_CFLAGS = \
@@ -110,10 +112,14 @@ test_ldadd += $(GIO_UNIX_LIBS)
 endif
 
 test_programs = \
-  tests/test-connection
+  tests/test-connection \
+  tests/test-parcel
 
 tests_test_connection_CFLAGS = $(test_cflags)
 tests_test_connection_LDADD = $(test_ldadd)
+
+tests_test_parcel_CFLAGS = $(test_cflags)
+tests_test_parcel_LDADD = $(test_ldadd)
 
 ###############################
 ## pkg-config DATA

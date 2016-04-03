@@ -22,6 +22,7 @@
 #include <garil/garilclient.h>
 #include <garil/garilconnection.h>
 #include <garil/garilenumtypes.h>
+#include <garil/garilparcel.h>
 #include <garil/garilversion.h>
 
 #undef __GARIL_GARIL_H_INSIDE__
