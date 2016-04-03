@@ -6,7 +6,7 @@
 
 <book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
   <bookinfo>
-    <title>libgaril Reference Manual</title>
+    <title>GARIL Reference Manual</title>
     <releaseinfo>
       This document is for the Android RIL client library, version &version;.
     </releaseinfo>
