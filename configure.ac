@@ -1,17 +1,17 @@
-m4_define([libgaril_major_version], [0])
-m4_define([libgaril_minor_version], [0])
-m4_define([libgaril_micro_version], [1])
-m4_define([libgaril_interface_age], [1])
-m4_define([libgaril_binary_age],
-          [m4_eval(100 * libgaril_minor_version + libgaril_micro_version)])
-m4_define([libgaril_version],
-          [libgaril_major_version.libgaril_minor_version.libgaril_micro_version])
-m4_define([libgaril_api_version], [0.0])
+m4_define([garil_major_version], [0])
+m4_define([garil_minor_version], [0])
+m4_define([garil_micro_version], [1])
+m4_define([garil_interface_age], [1])
+m4_define([garil_binary_age],
+          [m4_eval(100 * garil_minor_version + garil_micro_version)])
+m4_define([garil_version],
+          [garil_major_version.garil_minor_version.garil_micro_version])
+m4_define([garil_api_version], [0.0])
 
 AC_PREREQ([2.62])
-AC_INIT([libgaril], [libgaril_version],
+AC_INIT([garil], [garil_version],
         [https://github.com/vicamo/libgaril/issues],
-        [libgaril],
+        [garil],
         [https://github.com/vicamo/libgaril])
 
 AC_CONFIG_HEADERS([config.h])
@@ -23,13 +23,13 @@ AM_INIT_AUTOMAKE([1.14 dist-xz foreign subdir-objects no-define -Wall])
 AM_MAINTAINER_MODE([enable])
 AM_SILENT_RULES([yes])
 
-GARIL_MAJOR_VERSION=libgaril_major_version
-GARIL_MINOR_VERSION=libgaril_minor_version
-GARIL_MICRO_VERSION=libgaril_micro_version
-GARIL_INTERFACE_AGE=libgaril_interface_age
-GARIL_BINARY_AGE=libgaril_binary_age
-GARIL_VERSION=libgaril_version
-GARIL_API_VERSION=libgaril_api_version
+GARIL_MAJOR_VERSION=garil_major_version
+GARIL_MINOR_VERSION=garil_minor_version
+GARIL_MICRO_VERSION=garil_micro_version
+GARIL_INTERFACE_AGE=garil_interface_age
+GARIL_BINARY_AGE=garil_binary_age
+GARIL_VERSION=garil_version
+GARIL_API_VERSION=garil_api_version
 AC_SUBST(GARIL_MAJOR_VERSION)
 AC_SUBST(GARIL_MINOR_VERSION)
 AC_SUBST(GARIL_MICRO_VERSION)
@@ -38,9 +38,9 @@ AC_SUBST(GARIL_BINARY_AGE)
 AC_SUBST(GARIL_VERSION)
 AC_SUBST(GARIL_API_VERSION)
 
-m4_define([lt_current], [m4_eval(100 * libgaril_minor_version + libgaril_micro_version - libgaril_interface_age)])
-m4_define([lt_revision], [libgaril_interface_age])
-m4_define([lt_age], [m4_eval(libgaril_binary_age - libgaril_interface_age)])
+m4_define([lt_current], [m4_eval(100 * garil_minor_version + garil_micro_version - garil_interface_age)])
+m4_define([lt_revision], [garil_interface_age])
+m4_define([lt_age], [m4_eval(garil_binary_age - garil_interface_age)])
 LT_VERSION_INFO="lt_current:lt_revision:lt_age"
 LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
 AC_SUBST(LT_VERSION_INFO)

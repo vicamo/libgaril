@@ -1,4 +1,4 @@
-/* libgaril - Android RIL client library
+/* GARIL - Android RIL client library
  * Copyright (C) 2016 You-Sheng Yang
  *
  * This library is free software; you can redistribute it and/or
