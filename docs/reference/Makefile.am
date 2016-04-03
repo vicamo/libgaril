@@ -22,6 +22,9 @@ DOC_SOURCE_DIR = \
   $(top_srcdir)/garil \
   $(top_builddir)/garil
 
+SCAN_OPTIONS = \
+  --rebuild-types
+
 # Extra options to supply to gtkdoc-scangobj.
 SCANGOBJ_OPTIONS =
 
