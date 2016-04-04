@@ -54,6 +54,8 @@ struct _GarilConnection {
   GQueue *input_queue;
   guint input_idle_id;
   gboolean frozen;
+
+  GBufferedOutputStream *bostream;
 };
 
 static void initable_iface_init (GInitableIface *initable_iface);
@@ -463,6 +465,13 @@ initable_init (GInitable     *initable,
 
   if (connection->flags & GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING)
     connection->frozen = TRUE;
+
+  GOutputStream *ostream = g_io_stream_get_output_stream (connection->stream);
+  if (!G_IS_BUFFERED_OUTPUT_STREAM (ostream))
+    connection->bostream =
+      G_BUFFERED_OUTPUT_STREAM (g_buffered_output_stream_new (ostream));
+  else
+    connection->bostream = G_BUFFERED_OUTPUT_STREAM (g_object_ref (ostream));
 
   connection->cancellable = g_cancellable_new ();
 
