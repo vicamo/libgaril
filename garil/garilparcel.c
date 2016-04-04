@@ -32,6 +32,9 @@
  * underlying transport.
  */
 
+G_DEFINE_BOXED_TYPE (GarilParcel, garil_parcel,
+                     garil_parcel_ref, garil_parcel_unref)
+
 /**
  * GarilParcel:
  *
