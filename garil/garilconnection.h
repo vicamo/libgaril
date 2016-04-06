@@ -57,6 +57,13 @@ G_DECLARE_FINAL_TYPE (GarilConnection, garil_connection, GARIL, CONNECTION,
 #define GARIL_CONNECTION_PROP_FLAGS "flags"
 
 /**
+ * GARIL_CONNECTION_SIG_MESSAGE:
+ *
+ * Signal name for #GarilConnection::message.
+ */
+#define GARIL_CONNECTION_SIG_MESSAGE "message"
+
+/**
  * GarilConnectionFlags:
  * @GARIL_CONNECTION_FLAGS_NONE: No flag set.
  * @GARIL_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING: Delay message processing
@@ -102,5 +109,7 @@ GIOStream* garil_connection_get_stream (GarilConnection *connection);
 GSocketAddress* garil_connection_get_address (GarilConnection *connection);
 
 GarilConnectionFlags garil_connection_get_flags (GarilConnection *connection);
+
+void garil_connection_start_message_processing (GarilConnection *connection);
 
 G_END_DECLS
