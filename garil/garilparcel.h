@@ -22,11 +22,20 @@
 #endif
 
 #include <glib.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
+/**
+ * GARIL_TYPE_PARCEL:
+ *
+ * GType for #GarilParcel.
+ */
+#define GARIL_TYPE_PARCEL (garil_parcel_get_type ())
+
 typedef struct _GarilParcel GarilParcel;
 
+GType garil_parcel_get_type (void);
 GarilParcel *garil_parcel_new (GByteArray *array);
 GarilParcel *garil_parcel_ref (GarilParcel *parcel);
 void garil_parcel_unref (GarilParcel *parcel);
